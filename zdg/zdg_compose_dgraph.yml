@@ -1,0 +1,61 @@
+services:
+  middle_node_0:
+    command: /bin/bash zdg_node_demo.sh
+    container_name: middle_node_0
+    depends_on:
+    - source_node_0
+    - source_node_1
+    environment:
+    - ZDG_CONTAINER_NAME=middle_node_0
+    - ZDG_INBOUND_LIST=* 5551;* 5552
+    - ZDG_OUTBOUND_LIST=sink_node_0 5553
+    image: zdg
+    volumes:
+    - /home/deepview/repos/zdg/zdg:/demo
+    working_dir: /demo
+  sink_node_0:
+    command: /bin/bash zdg_node_demo.sh
+    container_name: sink_node_0
+    depends_on:
+    - middle_node_0
+    environment:
+    - ZDG_CONTAINER_NAME=sink_node_0
+    - ZDG_INBOUND_LIST=* 5553
+    - ZDG_OUTBOUND_LIST=
+    image: zdg
+    volumes:
+    - /home/deepview/repos/zdg/zdg:/demo
+    working_dir: /demo
+  source_node_0:
+    command: /bin/bash zdg_node_demo.sh
+    container_name: source_node_0
+    depends_on: []
+    environment:
+    - ZDG_CONTAINER_NAME=source_node_0
+    - ZDG_INBOUND_LIST=
+    - ZDG_OUTBOUND_LIST=middle_node_0 5551
+    image: zdg
+    volumes:
+    - /home/deepview/repos/zdg/zdg:/demo
+    working_dir: /demo
+  source_node_1:
+    command: /bin/bash zdg_node_demo.sh
+    container_name: source_node_1
+    depends_on: []
+    environment:
+    - ZDG_CONTAINER_NAME=source_node_1
+    - ZDG_INBOUND_LIST=
+    - ZDG_OUTBOUND_LIST=middle_node_0 5552
+    image: zdg
+    volumes:
+    - /home/deepview/repos/zdg/zdg:/demo
+    working_dir: /demo
+
+# Run it using
+#   sudo docker compose -f zdg_compose_dgraph.yml up --remove-orphans
+
+# Execute a commnad on a running container using
+#   docker exec -it zdg bash
+
+# Remove all stopped containers
+#   sudo docker rm $(sudo docker ps --filter status=exited -q)
