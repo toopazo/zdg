@@ -166,13 +166,16 @@ class ZdgNodeIface:
             # Create new connection
             socket = context.socket(zmq.REQ)
             socket.connect(SERVER_ENDPOINT)
-            print("Resending (%s)", message.keys())
+            print(f"Resending message {message.keys()}")
             socket.send_pyobj(message)
 
         return message, reply
 
     @staticmethod
     def process_inbound_message(inbound_fnct, socket_dict: dict):
+        """
+        process_inbound_message
+        """
         socket = socket_dict["socket"]
         socket_url = socket_dict["url"]
 
@@ -196,6 +199,9 @@ class ZdgNodeIface:
 
     @staticmethod
     def acknowledge_message(message):
+        """
+        acknowledge_message
+        """
         reply = {"message_time": message["time"]}
         return reply
 
@@ -240,12 +246,12 @@ class ZdgNodeIface:
                     _ = message
                     _ = reply
 
-                    if message_cnt % 100 == 0:
-                        message_t100 = time.time()
-                        message_dt = message_t100 - message_t0
-                        message_rate = message_cnt / message_dt
-                        print(f"[{fname}] Effective message rate {message_rate} message/s")
-                        message_t0 = time.time()
+            if message_cnt % 100 == 0:
+                message_t100 = time.time()
+                message_dt = message_t100 - message_t0
+                message_rate = message_cnt / message_dt
+                print(f"[{fname}] Effective inbound message rate {message_rate} message/s")
+                message_t0 = time.time()
 
     @staticmethod
     def process_0_to_n_communication(outbound_sockets: dict, outbound_fnct):
@@ -257,7 +263,7 @@ class ZdgNodeIface:
 
         # This is not an ideal solution
         # Allow for downstream nodes to initalize
-        time.sleep(10)
+        # time.sleep(10)
 
         # Process messages from both sockets
         message_t0 = time.time()
@@ -279,15 +285,12 @@ class ZdgNodeIface:
 
                 ZdgNodeIface.process_outbound_message(message=message, socket_dict=out_val)
 
-                if message_cnt % 100 == 0:
-                    message_t100 = time.time()
-                    message_dt = message_t100 - message_t0
-                    message_rate = message_cnt / message_dt
-                    print(f"[{fname}] Effective message rate {message_rate} message/s")
-                    message_t0 = time.time()
-
-            # time.sleep(1/15)
-            time.sleep(60)
+            if message_cnt % 100 == 0:
+                message_t100 = time.time()
+                message_dt = message_t100 - message_t0
+                message_rate = message_cnt / message_dt
+                print(f"[{fname}] Effective outbound message rate {message_rate} message/s")
+                message_t0 = time.time()
 
     @staticmethod
     def process_n_to_m_communication(inbound_sockets: dict, inbound_fnct, outbound_sockets: dict, outbound_fnct):

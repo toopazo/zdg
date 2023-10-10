@@ -1,6 +1,6 @@
 services:
   middle_node_0:
-    command: /bin/bash zdg_node_demo.sh
+    command: /bin/bash node_demo.sh
     container_name: middle_node_0
     depends_on:
     - source_node_0
@@ -14,7 +14,7 @@ services:
     - /home/deepview/repos/zdg/zdg:/demo
     working_dir: /demo
   sink_node_0:
-    command: /bin/bash zdg_node_demo.sh
+    command: /bin/bash node_demo.sh
     container_name: sink_node_0
     depends_on:
     - middle_node_0
@@ -27,7 +27,7 @@ services:
     - /home/deepview/repos/zdg/zdg:/demo
     working_dir: /demo
   source_node_0:
-    command: /bin/bash zdg_node_demo.sh
+    command: /bin/bash node_demo.sh
     container_name: source_node_0
     depends_on: []
     environment:
@@ -39,7 +39,7 @@ services:
     - /home/deepview/repos/zdg/zdg:/demo
     working_dir: /demo
   source_node_1:
-    command: /bin/bash zdg_node_demo.sh
+    command: /bin/bash node_demo.sh
     container_name: source_node_1
     depends_on: []
     environment:
@@ -52,7 +52,7 @@ services:
     working_dir: /demo
 
 # Run it using
-#   sudo docker compose -f zdg_compose_dgraph.yml up --remove-orphans
+#   sudo docker compose -f compose_dgraph.yml up --remove-orphans
 
 # Execute a commnad on a running container using
 #   docker exec -it zdg bash

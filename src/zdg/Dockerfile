@@ -19,13 +19,13 @@ RUN apt-get update && apt-get install -y \
     libxext6 \
     net-tools
 
-RUN /bin/bash zdg_venv.sh
+RUN /bin/bash create_venv.sh
 
 
-CMD ["/bin/bash", "zdg_node_demo.sh"]
+CMD ["/bin/bash", "node_demo.sh"]
 
 # Build the image using
-#   sudo docker build -t zdg -f zdg_Dockerfile .
+#   sudo docker build -t zdg -f Dockerfile .
 
 # Run the image using
 #   sudo docker run -it zdg
@@ -44,7 +44,7 @@ CMD ["/bin/bash", "zdg_node_demo.sh"]
 #   sudo docker ps -aq | xargs sudo docker stop | xargs sudo docker rm
 
 # Export this image to file
-#   sudo docker save zdg > zdg_docker_image.tar 
+#   sudo docker save zdg > docker_image.tar 
 
 # Load this image to docker
-#   sudo docker load --input zdg_docker_image.tar
+#   sudo docker load --input docker_image.tar

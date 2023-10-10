@@ -5,7 +5,8 @@ Interface to connect two or more nodes (Docker containers) together using point-
 import os
 
 import zmq
-from zdg_node_interface import ZdgNodeIface
+
+from zdg.node_interface import ZdgNodeIface
 
 # import pathlib
 # import time

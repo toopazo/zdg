@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling", "pyzmq", "PyYAML"]
+build-backend = "hatchling.build"
+
+[project]
+name = "zdg"
+version = "0.0.11"
+authors = [
+  { name="Tomas Opazo", email="toopazo@proton.me" },
+]
+description = "Scripts to create a directed graph where each node is a Docker container and each edge is a ZMQ point-to-point socket"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/toopazo/zdg"
+"Bug Tracker" = "https://github.com/toopazo/zdg/issues"

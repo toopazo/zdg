@@ -14,6 +14,8 @@ python -m pip install --upgrade isort
 
 # requirements.txt
 python -m pip install --upgrade pipreqs
+python -m pip install --upgrade build
+python -m pip install --upgrade twine
 
 # libraries
 python -m pip install zmq

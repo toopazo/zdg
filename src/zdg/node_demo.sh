@@ -5,7 +5,7 @@ source /venv/bin/activate
 # ls -all img/
 
 # https://stackoverflow.com/questions/51362213/docker-compose-not-printing-stdout-in-python-app
-python -u zdg_node_demo.py
+python -u node_demo.py
 
 echo "Paka paka!"
 
