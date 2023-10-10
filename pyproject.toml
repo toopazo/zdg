@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "zdg"
-version = "0.0.11"
+version = "0.0.15"
 authors = [
   { name="Tomas Opazo", email="toopazo@proton.me" },
 ]

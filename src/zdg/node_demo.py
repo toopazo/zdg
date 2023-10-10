@@ -3,17 +3,12 @@ Interface to connect two or more nodes (Docker containers) together using point-
 """
 
 import os
-
-import zmq
+import time
 
 from zdg.node_interface import ZdgNodeIface
 
 # import pathlib
 # import time
-
-
-#  Socket to talk to server
-context = zmq.Context()
 
 
 class ZdgNodeDemo:
@@ -33,6 +28,7 @@ class ZdgNodeDemo:
         """
         if len(message) == 0:
             # print("Assuming 0 to n role")
+            time.sleep(20)
 
             data = f"From {self.zmq_container_name} with love"
 

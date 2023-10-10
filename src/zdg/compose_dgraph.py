@@ -65,21 +65,37 @@ class ZdgNode:
         """
         update_yml
         """
-        datad = {
-            self.node_name: {
-                "command": self.node_command,
-                "container_name": self.node_name,
-                "depends_on": self.depends_on,
-                "environment": self.environment,
-                "image": self.node_image,
-                # "volumes": self.volumes,
-                # "working_dir": self.working_dir
-            }
-        }
+        # datad = {
+        #     self.node_name: {
+        #         "command": self.node_command,
+        #         "container_name": self.node_name,
+        #         "depends_on": self.depends_on,
+        #         "environment": self.environment,
+        #         "image": self.node_image,
+        #         # "volumes": self.volumes,
+        #         # "working_dir": self.working_dir
+        #     }
+        # }
 
-        # Use opt to update and overwrite values
+        # # Use opt to update and overwrite values
+        # for key, val in self.opt.items():
+        #     datad[self.node_name][key] = val
+
+        datad = {self.node_name: {}}
+
+        # Write all opt (key, val) pairs
         for key, val in self.opt.items():
             datad[self.node_name][key] = val
+
+        # Update reserved (key, val) pairs
+        datad[self.node_name]["command"] = self.node_command
+        datad[self.node_name]["container_name"] = self.node_name
+        datad[self.node_name]["depends_on"] = self.depends_on
+        try:
+            _ = [datad[self.node_name]["environment"].append(item) for item in self.environment]
+        except KeyError:
+            datad[self.node_name]["environment"] = self.environment
+        datad[self.node_name]["image"] = self.node_image
 
         return datad
 
@@ -124,8 +140,8 @@ class ZdgCompose:
     Class to create a directed graph where each node is a Docker container and each edge is a ZMQ point-to-point socket
     """
 
-    def __init__(self, edge_list: list, compose_path: str) -> None:
-        zmq_port = 5550
+    def __init__(self, edge_list: list, port_num: int) -> None:
+        zmq_port = port_num
         port_data = {}
         name1_list = []
         name2_list = []
@@ -197,15 +213,15 @@ class ZdgCompose:
         # node1.update_outbound_list(outbound_list_h, outbound_list_p)
         self.port_data = port_data
         self.compose_data = compose_data
-        self.compose_path = compose_path
+        # self.compose_path = compose_path
 
-    def dump(self):
+    def dump(self, compose_path: str):
         """
         dump
         """
         port_data = self.port_data
         compose_data = self.compose_data
-        compose_path = self.compose_path
+        # compose_path = self.compose_path
 
         arg = ZdgCompose.__name__
         for k, v in port_data.items():

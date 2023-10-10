@@ -110,6 +110,9 @@ class ZdgNodeIface:
 
     @staticmethod
     def process_outbound_message(message: dict, socket_dict: dict):
+        """
+        process_outbound_message
+        """
         socket = socket_dict["socket"]
         socket_url = socket_dict["url"]
 
@@ -134,13 +137,13 @@ class ZdgNodeIface:
         # reply = socket.recv_pyobj()
         # print(f"[outbound] Receiving from {socket_url}: {reply}")
 
-        REQUEST_TIMEOUT = 2500
-        REQUEST_RETRIES = 3
-        SERVER_ENDPOINT = socket_url
+        request_timeout = 2500
+        request_retries = 3
+        server_endpoint = socket_url
 
-        retries_left = REQUEST_RETRIES
+        retries_left = request_retries
         while True:
-            if (socket.poll(REQUEST_TIMEOUT) & zmq.POLLIN) != 0:
+            if (socket.poll(request_timeout) & zmq.POLLIN) != 0:
                 reply = socket.recv_pyobj()
                 if verbose:
                     print(f"[outbound] Receiving from {socket_url} a reply with keys: {reply.keys()}")
@@ -165,7 +168,7 @@ class ZdgNodeIface:
             print("Reconnecting to server")
             # Create new connection
             socket = context.socket(zmq.REQ)
-            socket.connect(SERVER_ENDPOINT)
+            socket.connect(server_endpoint)
             print(f"Resending message {message.keys()}")
             socket.send_pyobj(message)
 
