@@ -172,7 +172,8 @@ class ZdgNodeIface:
             print(f"Resending message {message.keys()}")
             socket.send_pyobj(message)
 
-        return message, reply
+        # return message, reply
+        return reply
 
     @staticmethod
     def process_inbound_message(inbound_fnct, socket_dict: dict):
@@ -286,7 +287,8 @@ class ZdgNodeIface:
                 # out_socket_url = out_val["url"]
                 _ = out_key
 
-                ZdgNodeIface.process_outbound_message(message=message, socket_dict=out_val)
+                reply = ZdgNodeIface.process_outbound_message(message=message, socket_dict=out_val)
+                _ = reply
 
             if message_cnt % 100 == 0:
                 message_t100 = time.time()
@@ -380,7 +382,10 @@ class ZdgNodeIface:
                             "counter": message_cnt,
                         }
 
-                        ZdgNodeIface.process_outbound_message(message=outbound_message, socket_dict=out_val)
+                        outbound_reply = ZdgNodeIface.process_outbound_message(
+                            message=outbound_message, socket_dict=out_val
+                        )
+                        _ = outbound_reply
 
     @staticmethod
     def run(inbound_fnct, outbound_fnct):

@@ -1,5 +1,5 @@
 """
-Interface to connect two or more nodes (Docker containers) together using point-to-point ZMQ sockets (client-server)
+Interface to connect two or more nodes (Docker containers) together directed edge (ZMQ client-server sockets )
 """
 
 import os
